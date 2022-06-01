@@ -28,7 +28,6 @@ func PutMovie(c *fiber.Ctx) error {
 		})
 	}
 
-	// movieExist := &model.Movie{MovieAPI: movieApi}
 	var movieExist model.Movie
 	if err := db.Where(`id = ?`, id).First(&movieExist).Error; errors.Is(err, gorm.ErrRecordNotFound) {
 		return c.Status(404).JSON(fiber.Map{
