@@ -1,7 +1,10 @@
 package controller
 
 import (
+	"episode-3/app/model"
+	"episode-3/app/services"
 	"net/http"
+	"strconv"
 	"testing"
 
 	"github.com/gofiber/fiber/v2"
@@ -9,25 +12,50 @@ import (
 )
 
 func TestDeleteMovie(t *testing.T) {
+
+	type TestDeleteMovieStruct struct {
+		description  string
+		route        string
+		expectedCode int
+	}
+
 	app := fiber.New()
 
-	app.Delete("/api/v1/movies", DeleteMovie)
+	app.Delete("/api/v1/movies/:id", DeleteMovie)
 
-	req, _ := http.NewRequest("DELETE", "/api/v1/movies/3", nil)
-	// req.Header.Set("accept", "application/json")
-	res, err := app.Test(req)
-	utils.AssertEqual(t, nil, err, "send request")
-	utils.AssertEqual(t, 200, res.StatusCode, "get response")
+	var movie model.Movie
+	movie.Title = "Test Title"
+	movie.Summary = "Test Summary"
+	movie.Year = 2020
+	movie.Director = "Joni"
 
-	req, _ = http.NewRequest("DELETE", "/api/v1/movies/2", nil)
-	req.Header.Set("accept", "application/json")
-	res, err = app.Test(req)
-	utils.AssertEqual(t, nil, err, "send request")
-	utils.AssertEqual(t, 404, res.StatusCode, "get response")
+	db := services.InitDatabaseTest()
+	db.Create(&movie)
+	id := strconv.Itoa(*&movie.ID)
 
-	req, _ = http.NewRequest("DELETE", "/api/v1/movies/p", nil)
-	req.Header.Set("accept", "application/json")
-	res, err = app.Test(req)
-	utils.AssertEqual(t, nil, err, "send request")
-	utils.AssertEqual(t, 400, res.StatusCode, "get response")
+	caseTest := []TestDeleteMovieStruct{
+		{
+			description:  "get response",
+			route:        "/api/v1/movies/" + id,
+			expectedCode: 200,
+		},
+		{
+			description:  "get response",
+			route:        "/api/v1/movies/test",
+			expectedCode: 400,
+		},
+		{
+			description:  "get response",
+			route:        "/api/v1/movies/0",
+			expectedCode: 404,
+		},
+	}
+
+	for _, test := range caseTest {
+		req, _ := http.NewRequest("DELETE", test.route, nil)
+		req.Header.Set("accept", "application/json")
+		res, err := app.Test(req)
+		utils.AssertEqual(t, nil, err, "send request")
+		utils.AssertEqual(t, test.expectedCode, res.StatusCode, test.description)
+	}
 }

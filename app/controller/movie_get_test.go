@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"episode-3/app/model"
+	"episode-3/app/services"
 	"net/http"
 	"testing"
 
@@ -9,20 +11,38 @@ import (
 )
 
 func TestGetMovie(t *testing.T) {
-	app := fiber.New()
 
+	type TestGetMovieStruct struct {
+		description  string
+		route        string
+		expectedCode int
+	}
+
+	caseTestGetMovie := []TestGetMovieStruct{
+		{
+			description:  "get response",
+			route:        "/api/v1/movies",
+			expectedCode: 200,
+		},
+	}
+
+	app := fiber.New()
 	app.Get("/api/v1/movies", GetMovie)
 
-	req, _ := http.NewRequest("GET", "/api/v1/movies", nil)
-	req.Header.Set("accept", "application/json")
-	res, err := app.Test(req)
+	var movie model.Movie
+	movie.Title = "Test Title"
+	movie.Summary = "Test Summary"
+	movie.Year = 2020
+	movie.Director = "Joni"
 
-	utils.AssertEqual(t, nil, err, "send request")
-	utils.AssertEqual(t, 200, res.StatusCode, "get response")
+	db := services.InitDatabaseTest()
+	db.Create(&movie)
 
-	req, _ = http.NewRequest("GET", "/api/v1/movies", nil)
-	res, err = app.Test(req)
-
-	utils.AssertEqual(t, nil, err, "send request")
-	utils.AssertEqual(t, 400, res.StatusCode, "get response")
+	for _, test := range caseTestGetMovie {
+		req, _ := http.NewRequest("GET", test.route, nil)
+		req.Header.Set("accept", "application/json")
+		res, err := app.Test(req)
+		utils.AssertEqual(t, nil, err, "send request")
+		utils.AssertEqual(t, test.expectedCode, res.StatusCode, test.description)
+	}
 }

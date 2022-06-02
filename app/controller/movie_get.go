@@ -3,7 +3,6 @@ package controller
 import (
 	"episode-3/app/model"
 	"episode-3/app/services"
-	"log"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -19,8 +18,7 @@ import (
 func GetMovie(c *fiber.Ctx) error {
 	db := services.DB
 	var movie []model.Movie
-	result := db.Model(&model.Movie{}).Find(&movie)
-	log.Println(result)
+	db.Model(&model.Movie{}).Find(&movie)
 
 	return c.Status(200).JSON(fiber.Map{
 		"message": "success",
