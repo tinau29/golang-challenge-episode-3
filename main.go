@@ -7,16 +7,27 @@ import (
 	"log"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
+// @title Golang Mini Bootcamp 2022 - By MonsterGroup
+// @version 1.0.0
+// @description API Documentasi
+// @contact.name tino
+// @contact.email tino@tog.co.id
+// @host localhost:8081
+// @schemes http
+// @BasePath /api/v1
 func main() {
 	services.InitDatabase()
 	db := services.DB
 	db.AutoMigrate(&model.Movie{})
 
 	app := fiber.New()
+	app.Use(cors.New())
+
 	app.Get("/", func(c *fiber.Ctx) error {
-		return c.Status(200).JSON("hello world")
+		return c.Status(200).SendString("hello world")
 	})
 
 	api := app.Group("/api/v1/movies")

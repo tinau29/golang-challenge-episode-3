@@ -7,6 +7,14 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+// GetMovie show all movies in array
+// @Summary show all movies in array
+// @Description show all movies in array
+// @Accept application/json
+// @Produce application/json
+// @Success 200 {object} []model.Movie{} "OK"
+// @Router /movies [get]
+// @Tags Movie
 func GetMovie(c *fiber.Ctx) error {
 	db := services.DB
 	var movie []model.Movie

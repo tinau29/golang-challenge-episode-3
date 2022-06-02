@@ -1,0 +1,164 @@
+basePath: /api/v1
+definitions:
+  model.Movie:
+    properties:
+      director:
+        example: joni
+        type: string
+      id:
+        example: 1
+        type: integer
+      summary:
+        example: ok
+        type: string
+      title:
+        example: Movie Title
+        type: string
+      year:
+        example: 2021
+        type: integer
+    type: object
+  model.MovieAPI:
+    properties:
+      director:
+        example: joni
+        type: string
+      summary:
+        example: ok
+        type: string
+      title:
+        example: Movie Title
+        type: string
+      year:
+        example: 2021
+        type: integer
+    type: object
+host: localhost:8081
+info:
+  contact:
+    email: tino@tog.co.id
+    name: tino
+  description: API Documentasi
+  title: Golang Mini Bootcamp 2022 - By MonsterGroup
+  version: 1.0.0
+paths:
+  /movies:
+    get:
+      consumes:
+      - application/json
+      description: show all movies in array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Movie'
+            type: array
+      summary: show all movies in array
+      tags:
+      - Movie
+    post:
+      consumes:
+      - application/json
+      description: Create new movie
+      parameters:
+      - description: Movie data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.MovieAPI'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Movie'
+        "400":
+          description: ""
+      summary: Create new movie
+      tags:
+      - Movie
+  /movies/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete movie by ID
+      parameters:
+      - description: Movie ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+        "404":
+          description: ""
+      summary: Delete movie by ID
+      tags:
+      - Movie
+    get:
+      consumes:
+      - application/json
+      description: Get a movie by ID
+      parameters:
+      - description: Movie ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Movie'
+        "400":
+          description: ""
+        "404":
+          description: ""
+      summary: Get a movie by ID
+      tags:
+      - Movie
+    put:
+      consumes:
+      - application/json
+      description: Update movie ID
+      parameters:
+      - description: Movie ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Movie data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.MovieAPI'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Movie'
+        "400":
+          description: ""
+        "404":
+          description: ""
+      summary: Update movie by ID
+      tags:
+      - Movie
+schemes:
+- http
+swagger: "2.0"

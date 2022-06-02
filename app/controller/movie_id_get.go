@@ -10,6 +10,17 @@ import (
 	"gorm.io/gorm"
 )
 
+// GetMovieID godoc
+// @Summary Get a movie by ID
+// @Description Get a movie by ID
+// @Accept application/json
+// @Produce application/json
+// @Success 200 {object} model.Movie{} "OK"
+// @Success 400
+// @Success 404
+// @Param id path string true "Movie ID"
+// @Router /movies/{id} [get]
+// @Tags Movie
 func GetMovieID(c *fiber.Ctx) error {
 	db := services.DB
 

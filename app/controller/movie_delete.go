@@ -10,6 +10,17 @@ import (
 	"gorm.io/gorm"
 )
 
+// DeleteMovie godoc
+// @Summary Delete movie by ID
+// @Description Delete movie by ID
+// @Accept application/json
+// @Produce application/json
+// @Success 200
+// @Success 400
+// @Success 404
+// @Param id path string true "Movie ID"
+// @Router /movies/{id} [delete]
+// @Tags Movie
 func DeleteMovie(c *fiber.Ctx) error {
 	db := services.DB
 

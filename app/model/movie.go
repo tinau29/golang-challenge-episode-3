@@ -1,7 +1,8 @@
 package model
 
+// Movie model
 type Movie struct {
-	ID int `json:"id"`
+	ID int `json:"id" example:"1"`
 	MovieAPI
 }
 

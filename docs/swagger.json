@@ -1,0 +1,244 @@
+{
+    "schemes": [
+        "http"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "API Documentasi",
+        "title": "Golang Mini Bootcamp 2022 - By MonsterGroup",
+        "contact": {
+            "name": "tino",
+            "email": "tino@tog.co.id"
+        },
+        "version": "1.0.0"
+    },
+    "host": "localhost:8081",
+    "basePath": "/api/v1",
+    "paths": {
+        "/movies": {
+            "get": {
+                "description": "show all movies in array",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Movie"
+                ],
+                "summary": "show all movies in array",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Movie"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create new movie",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Movie"
+                ],
+                "summary": "Create new movie",
+                "parameters": [
+                    {
+                        "description": "Movie data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.MovieAPI"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Movie"
+                        }
+                    },
+                    "400": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/movies/{id}": {
+            "get": {
+                "description": "Get a movie by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Movie"
+                ],
+                "summary": "Get a movie by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Movie ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Movie"
+                        }
+                    },
+                    "400": {
+                        "description": ""
+                    },
+                    "404": {
+                        "description": ""
+                    }
+                }
+            },
+            "put": {
+                "description": "Update movie ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Movie"
+                ],
+                "summary": "Update movie by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Movie ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Movie data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.MovieAPI"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Movie"
+                        }
+                    },
+                    "400": {
+                        "description": ""
+                    },
+                    "404": {
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete movie by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Movie"
+                ],
+                "summary": "Delete movie by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Movie ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "400": {
+                        "description": ""
+                    },
+                    "404": {
+                        "description": ""
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "model.Movie": {
+            "type": "object",
+            "properties": {
+                "director": {
+                    "type": "string",
+                    "example": "joni"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "summary": {
+                    "type": "string",
+                    "example": "ok"
+                },
+                "title": {
+                    "type": "string",
+                    "example": "Movie Title"
+                },
+                "year": {
+                    "type": "integer",
+                    "example": 2021
+                }
+            }
+        },
+        "model.MovieAPI": {
+            "type": "object",
+            "properties": {
+                "director": {
+                    "type": "string",
+                    "example": "joni"
+                },
+                "summary": {
+                    "type": "string",
+                    "example": "ok"
+                },
+                "title": {
+                    "type": "string",
+                    "example": "Movie Title"
+                },
+                "year": {
+                    "type": "integer",
+                    "example": 2021
+                }
+            }
+        }
+    }
+}

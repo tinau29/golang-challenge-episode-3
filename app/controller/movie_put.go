@@ -11,6 +11,18 @@ import (
 	"gorm.io/gorm"
 )
 
+// PostMovie godoc
+// @Summary Update movie by ID
+// @Description Update movie ID
+// @Accept application/json
+// @Produce application/json
+// @Success 200 {object} model.Movie{} "OK"
+// @Success 400
+// @Success 404
+// @Param id path string true "Movie ID"
+// @Param data body model.MovieAPI true "Movie data"
+// @Router /movies/{id} [put]
+// @Tags Movie
 func PutMovie(c *fiber.Ctx) error {
 	db := services.DB
 	var movieApi model.MovieAPI
