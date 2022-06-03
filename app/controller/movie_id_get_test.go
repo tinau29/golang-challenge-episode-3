@@ -44,7 +44,7 @@ func TestGetMovieID(t *testing.T) {
 			expectedCode: 400,
 		},
 		{
-			description:  "get response",
+			description:  "get response not found",
 			route:        "/api/v1/movies/0",
 			expectedCode: 404,
 		},

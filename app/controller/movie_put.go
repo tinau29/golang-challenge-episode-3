@@ -34,16 +34,16 @@ func PutMovie(c *fiber.Ctx) error {
 		})
 	}
 
-	if err := c.BodyParser(&movieApi); err != nil {
-		return c.Status(400).JSON(fiber.Map{
-			"message": "Invalid request",
-		})
-	}
-
 	var movieExist model.Movie
 	if err := db.Where(`id = ?`, id).First(&movieExist).Error; errors.Is(err, gorm.ErrRecordNotFound) {
 		return c.Status(404).JSON(fiber.Map{
 			"message": "Not Found",
+		})
+	}
+
+	if err := c.BodyParser(&movieApi); err != nil {
+		return c.Status(400).JSON(fiber.Map{
+			"message": "Invalid request",
 		})
 	}
 
